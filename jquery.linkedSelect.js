@@ -1,12 +1,17 @@
 /*!
- * Item: linkedSelect 1.0.0 (https://github.com/zargaripour/linkedSelect)
+ * Item: linkedSelect 1.1.0 (https://github.com/zargaripour/linkedSelect)
  * Author: Hamed Zargaripour (https://zargaripour.com)
  * Licensed under MIT
  */
 (function(n) {
     n.fn.linkedSelect = function(data, toggle, options) {
 
-        var firstBlank = options['firstBlank'];
+        options = (typeof options === 'undefined') ? {} : options;
+
+        var opt = [];
+        opt['force']        = (options['force'])        ? options['force']      :false;
+        opt['text']         = (options['text'])         ? options['text']       :"Choose your option";
+        opt['framework']    = (options['framework'])    ? options['framework']  :null;
 
         if(!data || !toggle){
             return null;
@@ -16,38 +21,49 @@
 
             function select(list,level) {
                 var $thisElement    = $group.filter('[data-level="'+ level +'"]');
-                var defaultKey      = $thisElement.attr("data-value");
+                var defaultKey      = $thisElement.attr('data-value');
                 var defaultExist    = false;
 
                 if($thisElement.length > 0) {
-                    $thisElement.find('option').remove();
+
+                    var tempLevel = level;
+                    do {
+                        if ($group.filter('[data-level="'+ tempLevel +'"]').length > 0)
+                            {
+                                $group.filter('[data-level="'+ tempLevel +'"]').find('option').remove();
+                                if (opt['force'] == true)
+                                    $group.filter('[data-level="'+ tempLevel +'"]').append($('<option value="" disabled selected>' + opt['text'] + '</option>'));
+                                else
+                                    $group.filter('[data-level="'+ tempLevel +'"]').append($('<option value="">' + opt['text'] + '</option>'));
+                            }
+                        else
+                            break;
+                        tempLevel++;
+                    }while(true);
 
                     if (typeof list === 'object') {
-
-                        if (firstBlank)
-                            $thisElement.append($("<option></option>"));
 
                         $.each(list, function (key, value) {
                             var fixedValue = null;
 
-                            if(value["__title"] == undefined)
+                            if(value['__title'] == undefined)
                                 fixedValue = value;
                             else
-                                fixedValue = value["__title"];
+                                fixedValue = value['__title'];
 
-                            if(key == "__title") {
+                            if(key == '__title') {
                                 //skip the title
                             }
                             else if(key == defaultKey) {
-                                $thisElement.append($("<option></option>")
-                                    .attr("value", key)
-                                    .attr("selected", "selected")
+                                $thisElement.append($('<option></option>')
+                                    .attr('value', key)
+                                    .attr('selected', 'selected')
                                     .text(fixedValue));
                                 defaultExist = true;
                             }
                             else {
-                                $thisElement.append($("<option></option>")
-                                    .attr("value", key)
+                                $thisElement.append($('<option></option>')
+                                    .attr('value', key)
                                     .text(fixedValue));
                             }
                         });
@@ -58,6 +74,9 @@
                         }
                     }
                 }
+
+                if (opt['framework'] == "materialize")
+                    $('select').material_select('update');
             }
 
             function ListGenerator(data, level) {
@@ -74,7 +93,6 @@
             $group.filter('[data-level]').change(function() {
                 var level   = parseInt($(this).attr('data-level'));
                 var list    = ListGenerator(data, level);
-
                 select(list, level + 1);
             });
 
