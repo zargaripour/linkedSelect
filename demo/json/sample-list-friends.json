@@ -1,0 +1,22 @@
+{
+    "Ra":
+    {
+        "__title":"Rachel",
+        "Gr":"Green",
+        "Fa":"Farber",
+        "Ge":"Geller"
+    },
+    "Mo":
+    {
+        "__title":"Monica",
+        "Ge":"Geller",
+        "Bi":"Bing"
+    },
+    "ph":
+    {
+        "__title":"Phoebe",
+        "Bu":"Buffay",
+        "Ha":"Hannigan",
+        "Pr":"Princess Consuela Banana Hammock"
+    }
+}
