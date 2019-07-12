@@ -1,0 +1,39 @@
+/*!
+ * Item: linkedSelect 1.2.0 (https://github.com/zargaripour/linkedSelect.js)
+ * Author: Hamed Zargaripour (https://zargaripour.com)
+ * Licensed under MIT
+ */
+@import "materialicons-font/font.css";
+@import "roboto-font/font.css";
+@import "vazir-font/font.css";
+
+html {
+    font-family: 'Vazir', 'Roboto', 'sans-serif';
+    font-size: 20px;
+}
+
+.text-center {
+    text-align: center;
+    text-align: -moz-center;
+    text-align: -webkit-center;
+}
+
+.text-left {
+    text-align: left;
+    text-align: -moz-left;
+    text-align: -webkit-left;
+}
+
+.text-right {
+    text-align: right;
+    text-align: -moz-right;
+    text-align: -webkit-right;
+}
+
+.rtl {
+    direction: rtl;
+}
+
+.ltr {
+    direction: ltr;
+}
